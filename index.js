@@ -30,7 +30,14 @@ app.get('/users/:id', async (req, res) => {
   else res.status(404).json({ error: 'User not found' });
 });
 
-
+// Update - Modify user
+app.put('/users/:id', async (req, res) => {
+  const user = await User.findByPk(req.params.id);
+  if (user) {
+    await user.update(req.body);
+    res.json(user);
+  } else res.status(404).json({ error: 'User not found' });
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
